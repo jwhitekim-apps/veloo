@@ -22,25 +22,20 @@
       "model-review": "模型"
     },
     "navGroup": {
-      "work": "工作",
       "research": "研究",
       "knowledge": "知识"
     },
     "workspace": {
-      "plan": "计划",
       "research": "研究",
       "model-lab": "模型实验室"
     },
     "workspaceMobile": {
-      "plan": "计划",
       "research": "研究",
       "model-lab": "模型实验室"
     },
     "workspaceAria": "工作区",
     "workspaceLabel": "veloo 工作区",
     "navMobile": {
-      "todo": "任务",
-      "calendar": "日历",
       "paper": "论文",
       "translate": "翻译",
       "contextor": "上下文",
@@ -49,8 +44,7 @@
     "language": "语言",
     "accountMenu": "账户菜单",
     "logout": "退出登录",
-    "loggingOut": "正在退出...",
-    "weeklyReview": "每周回顾"
+    "loggingOut": "正在退出..."
   },
   "landing": {
     "navAria": "首页导航",
@@ -86,7 +80,6 @@
       "eyebrow": "Built for deep work",
       "title": "只保留研究所需工具，并紧密连接",
       "description": "减少在应用之间切换的时间，让思考与执行的上下文持续相连。",
-      "plan": { "title": "计划与日历", "description": "将任务拆解为可执行步骤，并一目了然地管理研究日程。" },
       "paper": { "title": "论文核心分析", "description": "仅凭标题或 URL 快速了解研究问题、方法、结论和期刊信息。" },
       "translate": { "title": "上下文翻译", "description": "面向 ML 与 DL 的自然翻译，让阅读过程保持连贯。" },
       "model": { "title": "模型结构学习", "description": "分析架构图，亲自讲解，再通过 AI 反馈加深理解。" },
@@ -304,108 +297,10 @@
   },
   "todo": {
     "kicker": "研究规划",
-    "todayPlan": "Today’s plan",
-    "researchFlow": "今日工作列表",
-    "summary": {
-      "today": "今日进度",
-      "week": "本周进度",
-      "all": "全部进度",
-      "memo": "备注进度",
-      "complete": "已完成"
-    },
-    "priority": {
-      "urgent": "紧急",
-      "mid": "中",
-      "normal": "低"
-    },
-    "filters": {
-      "today": "今天",
-      "week": "本周",
-      "all": "全部",
-      "memo": "备注"
-    },
-    "filterAriaLabel": "待办过滤器",
-    "addButton": "添加",
-    "addTodoFooter": "添加待办任务",
-    "openDetail": "查看任务详情",
-    "activeCount": "{{count}} 个进行中",
-    "noTodos": "暂无待办任务",
-    "completedToggle": "已完成",
-    "loading": "正在加载待办事项",
-    "modal": {
-      "title": "添加待办任务",
-      "namePlaceholder": "需要做什么？",
-      "memoPlaceholder": "记录背景或上下文 — 如反馈、参考、先前的讨论等",
-      "priorityLabel": "优先级",
-      "deadlineLabel": "截止日期",
-      "save": "保存"
-    },
     "overview": {
-      "heroTitle": "今日工作一目了然",
-      "heroDescription": "选择待办任务即可查看详细步骤及 AI 执行策略。",
-      "aiBadge": "AI 执行计划",
-      "inProgress": "进行中",
-      "urgentItems": "紧急项目",
-      "completionRate": "完成率",
-      "nextTodo": "下一步待办",
-      "selectFromList": "从列表中选择以查看详情",
-      "emptyActive": "暂无进行中的待办任务。尝试添加新任务吧。"
+      "heroDescription": "选择待办任务即可查看详细步骤及 AI 执行策略。"
     },
-    "detail": {
-      "selectTodo": "请选择待办任务",
-      "backToList": "← 返回列表",
-      "memoPlaceholder": "备注 · 上下文",
-      "memoContext": "备注 · 上下文",
-      "stepsCompleted": "步骤 {{done}}/{{total}} 已完成",
-      "aiSteps": "AI 执行步骤",
-      "regenerating": "正在重新生成...",
-      "generating": "正在生成...",
-      "aiRegenerate": "AI 重新生成",
-      "addStepPlaceholder": "+ 添加步骤",
-      "autoGenerateSteps": "通过 AI 自动生成步骤",
-      "deleteConfirm": "确认删除此待办吗？"
-    },
-    "errors": {
-      "toggleDoneFailed": "标记完成时发生错误。"
-    }
-  },
-  "calendar": {
-    "kicker": "每周计划",
-    "heroTitle": "规划你的一周时间",
-    "heroDescription": "将未分配的待办任务拖拽到所需时间段，轻松调整日程。",
-    "eventsBadge": "{{count}} 个日程",
-    "prevWeek": "上一周",
-    "nextWeek": "下一周",
-    "todoListButton": "待办任务列表",
-    "durationLabel": "分配时长",
-    "durationHours": "{{count}} 小时",
-    "removeScheduleHint": "取消时间分配",
-    "weekDaysLabel": "选择星期",
-    "unscheduledTitle": "未分配待办",
-    "loadingEvents": "正在加载日程",
-    "allPlaced": "已全部分配",
-    "days": {
-      "mon": "周一",
-      "tue": "周二",
-      "wed": "周三",
-      "thu": "周四",
-      "fri": "周五",
-      "sat": "周六",
-      "sun": "周日"
-    }
-  },
-  "weeklyReview": {
-    "todoListButton": "待办任务列表",
-    "loading": "加载中...",
-    "loadError": "无法加载数据。",
-    "stats": {
-      "completed": "已完成",
-      "created": "已创建",
-      "completionRate": "完成率",
-      "overdue": "延期任务"
-    },
-    "priorityBreakdown": "按优先级细分",
-    "overdueList": "延期任务 ({{count}} 个)"
+    "researchFlow": "今日工作列表"
   },
   "contextor": {
     "kicker": "模型实验室",

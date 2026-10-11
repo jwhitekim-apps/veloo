@@ -2,11 +2,9 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useT } from '@/shared/i18n'
 import {
+  HOME_NAV,
   MOBILE_NAV,
   WORKSPACE_NAV_ITEMS,
-  loadLastPlanNav,
-  mobilePrimaryFor,
-  saveLastPlanNav,
   type MobilePrimaryKey,
   type NavKey,
 } from '@/shared/navigation/workspaceNav'
@@ -22,16 +20,15 @@ export default function MobileCapsuleNavigation() {
 
   // 현재 라우트에서 활성 NavKey를 유도한다 (route가 source of truth).
   const activeNavKey: NavKey =
-    WORKSPACE_NAV_ITEMS.find((item) => location.pathname.startsWith(`/${username}/${item.path}`))?.key ?? 'tasks'
-  const activeMobileKey = mobilePrimaryFor(activeNavKey)
+    WORKSPACE_NAV_ITEMS.find((item) => location.pathname.startsWith(`/${username}/${item.path}`))?.key ?? HOME_NAV
+  const activeMobileKey = activeNavKey
 
   const goToNav = (key: NavKey) => {
-    if (key === 'tasks' || key === 'calendar') saveLastPlanNav(key)
     navigate(`/${username}/${key}`)
   }
 
   const selectMobileItem = (key: MobilePrimaryKey) => {
-    goToNav(key === 'plan' ? loadLastPlanNav() : key)
+    goToNav(key)
   }
 
   const tabsRef = useRef<HTMLElement>(null)
@@ -190,27 +187,6 @@ export default function MobileCapsuleNavigation() {
 
   return (
     <>
-      {activeMobileKey === 'plan' && (
-        <nav className="shell-plan-switcher" aria-label={t('shell.workspace.plan')}>
-          <button
-            type="button"
-            onClick={() => goToNav('tasks')}
-            className={activeNavKey === 'tasks' ? 'is-active' : ''}
-          >
-            <MOBILE_NAV_TASKS_ICON />
-            {t('shell.nav.todo')}
-          </button>
-          <button
-            type="button"
-            onClick={() => goToNav('calendar')}
-            className={activeNavKey === 'calendar' ? 'is-active' : ''}
-          >
-            <MOBILE_NAV_CALENDAR_ICON />
-            {t('shell.nav.calendar')}
-          </button>
-        </nav>
-      )}
-
       <div className="shell-mobile-dock">
         <nav
           ref={tabsRef}
@@ -283,7 +259,3 @@ function indicatorRectFor(button: HTMLButtonElement) {
     width: button.offsetWidth - INDICATOR_INSET * 2,
   }
 }
-
-// Plan 스위처 아이콘은 WORKSPACE_NAV_ITEMS에서 그대로 가져와 하드코딩 중복을 피한다.
-const MOBILE_NAV_TASKS_ICON = WORKSPACE_NAV_ITEMS.find((item) => item.key === 'tasks')!.Icon
-const MOBILE_NAV_CALENDAR_ICON = WORKSPACE_NAV_ITEMS.find((item) => item.key === 'calendar')!.Icon

@@ -13,8 +13,6 @@ from server.app.paper_analyzer import app as paper_app
 from server.app.translator import app as translate_app
 from server.app.contextor import app as contextor_app
 from server.app.reviwer import app as arch_app
-from server.app.todo import app as todo_app
-from server.app.todo.core.scheduler import start_scheduler, stop_scheduler
 from server.app.auth import router as auth_router, AuthMiddleware
 
 BASE = os.path.dirname(os.path.dirname(__file__))
@@ -44,11 +42,7 @@ WORKBOX_FILE_RE = re.compile(r"^workbox-[\w-]+\.js$")
 async def lifespan(_app: FastAPI):
     if not os.getenv("SUPABASE_URL"):
         logging.warning("SUPABASE_URL이 설정되지 않았습니다. 인증이 정상 동작하지 않을 수 있습니다.")
-    if os.getenv("SMTP_USER"):
-        start_scheduler()
     yield
-    if os.getenv("SMTP_USER"):
-        stop_scheduler()
 
 
 app = FastAPI(title="Lab Toolkit", lifespan=lifespan)
@@ -65,7 +59,6 @@ app.include_router(auth_router)
 app.mount("/paper", paper_app)
 app.mount("/translate", translate_app)
 app.mount("/model-review", arch_app)
-app.mount("/todo", todo_app)
 app.mount("/contextor", contextor_app)
 app.mount("/assets", StaticFiles(directory=os.path.join(DIST, "assets")), name="assets")
 app.mount("/marketing", StaticFiles(directory=os.path.join(DIST, "marketing")), name="marketing-assets")

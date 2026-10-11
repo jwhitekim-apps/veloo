@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { LogOut } from 'lucide-react'
 import { useT } from '@/shared/i18n'
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher'
-import { WORKSPACE_NAV_ITEMS, loadLastPlanNav } from '@/shared/navigation/workspaceNav'
+import { HOME_NAV, WORKSPACE_NAV_ITEMS } from '@/shared/navigation/workspaceNav'
 import { useDeviceOS } from '@/shared/hooks/useDeviceOS'
 import DesktopSidebar from './DesktopSidebar'
 import MobileCapsuleNavigation from './MobileCapsuleNavigation'
@@ -66,7 +66,7 @@ export default function WorkspaceLayout() {
           <button
             type="button"
             className="shell-brand"
-            onClick={() => navigate(`/${username}/${loadLastPlanNav()}`)}
+            onClick={() => navigate(`/${username}/${HOME_NAV}`)}
             aria-label={t('shell.home')}
           >
             <span className="shell-brand-mark">

@@ -16,7 +16,6 @@ import { useLanguage } from '@/shared/i18n'
 import './Marketing.css'
 
 const FEATURES = [
-  { key: 'plan', Icon: CalendarDays },
   { key: 'paper', Icon: FileSearch },
   { key: 'translate', Icon: Languages },
   { key: 'model', Icon: Network },

@@ -22,25 +22,20 @@
       "model-review": "Models"
     },
     "navGroup": {
-      "work": "Work",
       "research": "Research",
       "knowledge": "Knowledge"
     },
     "workspace": {
-      "plan": "Plan",
       "research": "Research",
       "model-lab": "Model Lab"
     },
     "workspaceMobile": {
-      "plan": "Plan",
       "research": "Research",
       "model-lab": "Model Lab"
     },
     "workspaceAria": "Workspace",
     "workspaceLabel": "veloo workspace",
     "navMobile": {
-      "todo": "Todo",
-      "calendar": "Cal",
       "paper": "Paper",
       "translate": "Trans",
       "contextor": "Context",
@@ -49,8 +44,7 @@
     "language": "Language",
     "accountMenu": "Account menu",
     "logout": "Log out",
-    "loggingOut": "Logging out...",
-    "weeklyReview": "Weekly Review"
+    "loggingOut": "Logging out..."
   },
   "landing": {
     "navAria": "Homepage navigation",
@@ -92,10 +86,6 @@
       "eyebrow": "Built for deep work",
       "title": "Only the tools research needs, connected",
       "description": "Spend less time switching apps and keep the context between thinking and doing.",
-      "plan": {
-        "title": "Plans and calendar",
-        "description": "Break work into actionable steps and manage your research schedule at a glance."
-      },
       "paper": {
         "title": "Paper analysis",
         "description": "Understand the problem, method, conclusion, and journal data from a title or URL."
@@ -331,108 +321,10 @@
   },
   "todo": {
     "kicker": "Research planning",
-    "todayPlan": "Today's plan",
-    "researchFlow": "Today's work list",
-    "summary": {
-      "today": "Today's progress",
-      "week": "This week's progress",
-      "all": "Overall progress",
-      "memo": "Notes progress",
-      "complete": "complete"
-    },
-    "priority": {
-      "urgent": "Urgent",
-      "mid": "Medium",
-      "normal": "Low"
-    },
-    "filters": {
-      "today": "Today",
-      "week": "This Week",
-      "all": "All",
-      "memo": "Notes"
-    },
-    "filterAriaLabel": "Todo Filter",
-    "addButton": "Add",
-    "addTodoFooter": "Add a task",
-    "openDetail": "View task details",
-    "activeCount": "{{count}} in progress",
-    "noTodos": "No tasks",
-    "completedToggle": "Completed",
-    "loading": "Loading tasks",
-    "modal": {
-      "title": "Add Task",
-      "namePlaceholder": "What needs to be done?",
-      "memoPlaceholder": "Add context or background — feedback, notes, previous discussions, etc.",
-      "priorityLabel": "Priority",
-      "deadlineLabel": "Deadline",
-      "save": "Save"
-    },
     "overview": {
-      "heroTitle": "Today's work at a glance",
-      "heroDescription": "Select a task to view detailed steps and AI execution strategies.",
-      "aiBadge": "AI Action Plan",
-      "inProgress": "In Progress",
-      "urgentItems": "Urgent Items",
-      "completionRate": "Completion Rate",
-      "nextTodo": "Next Task",
-      "selectFromList": "Select from the list to view details",
-      "emptyActive": "No tasks in progress. Try adding a new task."
+      "heroDescription": "Select a task to view detailed steps and AI execution strategies."
     },
-    "detail": {
-      "selectTodo": "Select a task",
-      "backToList": "← Back to list",
-      "memoPlaceholder": "Notes · Context",
-      "memoContext": "Notes · Context",
-      "stepsCompleted": "Steps {{done}}/{{total}} completed",
-      "aiSteps": "AI Action Steps",
-      "regenerating": "Regenerating...",
-      "generating": "Generating...",
-      "aiRegenerate": "AI Regenerate",
-      "addStepPlaceholder": "+ Add step",
-      "autoGenerateSteps": "Auto-generate steps with AI",
-      "deleteConfirm": "Are you sure you want to delete this task?"
-    },
-    "errors": {
-      "toggleDoneFailed": "An error occurred while toggling completion."
-    }
-  },
-  "calendar": {
-    "kicker": "Weekly planner",
-    "heroTitle": "Plan your week",
-    "heroDescription": "Drag unscheduled tasks into time slots and organize your schedule at a glance.",
-    "eventsBadge": "{{count}} events",
-    "prevWeek": "Previous Week",
-    "nextWeek": "Next Week",
-    "todoListButton": "Task List",
-    "durationLabel": "Duration",
-    "durationHours": "{{count}} hours",
-    "removeScheduleHint": "Remove from schedule",
-    "weekDaysLabel": "Select Days",
-    "unscheduledTitle": "Unscheduled Tasks",
-    "loadingEvents": "Loading events",
-    "allPlaced": "All tasks scheduled",
-    "days": {
-      "mon": "Mon",
-      "tue": "Tue",
-      "wed": "Wed",
-      "thu": "Thu",
-      "fri": "Fri",
-      "sat": "Sat",
-      "sun": "Sun"
-    }
-  },
-  "weeklyReview": {
-    "todoListButton": "Task List",
-    "loading": "Loading...",
-    "loadError": "Failed to load data.",
-    "stats": {
-      "completed": "Completed",
-      "created": "Created",
-      "completionRate": "Completion Rate",
-      "overdue": "Overdue Tasks"
-    },
-    "priorityBreakdown": "Breakdown by Priority",
-    "overdueList": "Overdue Tasks ({{count}})"
+    "researchFlow": "Today's work list"
   },
   "contextor": {
     "kicker": "Model lab",

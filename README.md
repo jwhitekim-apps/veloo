@@ -22,10 +22,8 @@ history.
       you're reading, not one flattened definition
 - [x] **Model Review** — upload an architecture diagram, explain it
       yourself, get it graded against an AI reference explanation
-- [x] **Plan (Todo + Calendar)** — research tasks with AI-suggested
-      breakdowns, plus a drag-and-drop weekly calendar
 
-Every approved account gets all five one click apart at `/:username`,
+Every approved account gets all four one click apart at `/:username`,
 sharing one login and one history — see [docs/features.md](docs/features.md)
 for the full write-up of each module.
 

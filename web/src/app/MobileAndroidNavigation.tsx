@@ -1,11 +1,9 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useT } from '@/shared/i18n'
 import {
+  HOME_NAV,
   MOBILE_NAV,
   WORKSPACE_NAV_ITEMS,
-  loadLastPlanNav,
-  mobilePrimaryFor,
-  saveLastPlanNav,
   type NavKey,
 } from '@/shared/navigation/workspaceNav'
 
@@ -20,41 +18,19 @@ export default function MobileAndroidNavigation() {
   const { username = '' } = useParams()
 
   const activeNavKey: NavKey =
-    WORKSPACE_NAV_ITEMS.find((item) => location.pathname.startsWith(`/${username}/${item.path}`))?.key ?? 'tasks'
-  const activeMobileKey = mobilePrimaryFor(activeNavKey)
+    WORKSPACE_NAV_ITEMS.find((item) => location.pathname.startsWith(`/${username}/${item.path}`))?.key ?? HOME_NAV
+  const activeMobileKey = activeNavKey
 
   const goToNav = (key: NavKey) => {
-    if (key === 'tasks' || key === 'calendar') saveLastPlanNav(key)
     navigate(`/${username}/${key}`)
   }
 
   const selectMobileItem = (key: (typeof MOBILE_NAV)[number]['key']) => {
-    goToNav(key === 'plan' ? loadLastPlanNav() : key)
+    goToNav(key)
   }
 
   return (
     <>
-      {activeMobileKey === 'plan' && (
-        <nav className="shell-plan-switcher" aria-label={t('shell.workspace.plan')}>
-          <button
-            type="button"
-            onClick={() => goToNav('tasks')}
-            className={activeNavKey === 'tasks' ? 'is-active' : ''}
-          >
-            <ANDROID_NAV_TASKS_ICON />
-            {t('shell.nav.todo')}
-          </button>
-          <button
-            type="button"
-            onClick={() => goToNav('calendar')}
-            className={activeNavKey === 'calendar' ? 'is-active' : ''}
-          >
-            <ANDROID_NAV_CALENDAR_ICON />
-            {t('shell.nav.calendar')}
-          </button>
-        </nav>
-      )}
-
       <nav className="shell-android-tabs" aria-label={t('shell.workspaceAria')}>
         {MOBILE_NAV.map(({ key, Icon, IconSolid, labelKey }) => {
           const isActive = activeMobileKey === key
@@ -78,8 +54,3 @@ export default function MobileAndroidNavigation() {
     </>
   )
 }
-
-// Plan 스위처 아이콘은 WORKSPACE_NAV_ITEMS에서 그대로 가져온다 — MobileCapsuleNavigation.tsx와
-// 동일한 이유(하드코딩 중복 방지)로 여기서도 반복.
-const ANDROID_NAV_TASKS_ICON = WORKSPACE_NAV_ITEMS.find((item) => item.key === 'tasks')!.Icon
-const ANDROID_NAV_CALENDAR_ICON = WORKSPACE_NAV_ITEMS.find((item) => item.key === 'calendar')!.Icon

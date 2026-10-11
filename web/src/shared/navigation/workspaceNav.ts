@@ -1,18 +1,16 @@
 import type { ComponentType, SVGProps } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import { Braces, CalendarDays, FileSearch, Languages, ListTodo, Network } from 'lucide-react'
-// 모바일 하단 독 5개 아이콘 전용 — lucide는 순수 스트로크(선형) 아이콘 세트라 "선택 시 면형으로
-// 바뀌는" 요구를 못 채워서(2026-09-06), outline/solid 쌍을 모두 제공하는 heroicons를 이 5개
+import { Braces, FileSearch, Languages, Network } from 'lucide-react'
+// 모바일 하단 독 아이콘 전용 — lucide는 순수 스트로크(선형) 아이콘 세트라 "선택 시 면형으로
+// 바뀌는" 요구를 못 채워서(2026-09-06), outline/solid 쌍을 모두 제공하는 heroicons를 이
 // 아이콘에 한해 추가로 쓴다. 데스크톱 사이드바(WORKSPACE_NAV)는 기존 lucide 그대로 유지.
 import {
-  Squares2X2Icon,
   DocumentMagnifyingGlassIcon,
   GlobeAltIcon,
   CpuChipIcon,
   LightBulbIcon,
 } from '@heroicons/react/24/outline'
 import {
-  Squares2X2Icon as Squares2X2IconSolid,
   DocumentMagnifyingGlassIcon as DocumentMagnifyingGlassIconSolid,
   CpuChipIcon as CpuChipIconSolid,
   LightBulbIcon as LightBulbIconSolid,
@@ -26,8 +24,12 @@ type HeroIcon = ComponentType<SVGProps<SVGSVGElement>>
 
 // Primary Navigation — 서로 독립적인 제품 영역. Desktop Sidebar와 Mobile Capsule
 // Navigation이 이 하나의 정보 구조를 공유한다 (route는 항상 같고, 표현 방식만 다름).
-export type NavKey = 'tasks' | 'calendar' | 'papers' | 'translate' | 'models' | 'concepts'
-export type NavGroupKey = 'work' | 'research' | 'knowledge'
+export type NavKey = 'papers' | 'translate' | 'models' | 'concepts'
+export type NavGroupKey = 'research' | 'knowledge'
+
+// 로그인 뒤 첫 화면이자 상단 로고를 누르면 가는 곳. 할 일(Plan)은 2026-10-11에 Microsoft To Do로
+// 옮기고 제거했다.
+export const HOME_NAV: NavKey = 'papers'
 
 export interface NavItem {
   key: NavKey
@@ -43,14 +45,6 @@ export interface NavGroup {
 }
 
 export const WORKSPACE_NAV: NavGroup[] = [
-  {
-    group: 'work',
-    labelKey: 'shell.navGroup.work',
-    items: [
-      { key: 'tasks', path: 'tasks', labelKey: 'shell.nav.todo', Icon: ListTodo },
-      { key: 'calendar', path: 'calendar', labelKey: 'shell.nav.calendar', Icon: CalendarDays },
-    ],
-  },
   {
     group: 'research',
     labelKey: 'shell.navGroup.research',
@@ -71,12 +65,10 @@ export const WORKSPACE_NAV: NavGroup[] = [
 
 export const WORKSPACE_NAV_ITEMS: NavItem[] = WORKSPACE_NAV.flatMap((group) => group.items)
 
-// Mobile Capsule Navigation은 화면이 좁아 Tasks/Calendar를 "Plan" 하나로 합친다.
-// (모바일에서 하단 독 슬롯이 5개까지가 자연스럽다는 기존 결정 — docs/ios-capsule-navigation.md)
-export type MobilePrimaryKey = 'plan' | 'papers' | 'translate' | 'models' | 'concepts'
+// 모바일 하단 독. 데스크톱 항목과 같은 키를 쓴다.
+export type MobilePrimaryKey = NavKey
 
 export const MOBILE_NAV: { key: MobilePrimaryKey; labelKey: string; Icon: HeroIcon; IconSolid: HeroIcon }[] = [
-  { key: 'plan', labelKey: 'shell.workspaceMobile.plan', Icon: Squares2X2Icon, IconSolid: Squares2X2IconSolid },
   {
     key: 'papers',
     labelKey: 'shell.navMobile.paper',
@@ -87,18 +79,3 @@ export const MOBILE_NAV: { key: MobilePrimaryKey; labelKey: string; Icon: HeroIc
   { key: 'models', labelKey: 'shell.navMobile.model-review', Icon: CpuChipIcon, IconSolid: CpuChipIconSolid },
   { key: 'concepts', labelKey: 'shell.navMobile.contextor', Icon: LightBulbIcon, IconSolid: LightBulbIconSolid },
 ]
-
-export function mobilePrimaryFor(navKey: NavKey): MobilePrimaryKey {
-  return navKey === 'tasks' || navKey === 'calendar' ? 'plan' : navKey
-}
-
-// 'plan' 탭이 tasks/calendar 중 어디로 갈지는 마지막 방문지를 기억한다 (기존 동작 유지).
-export const LAST_PLAN_KEY = 'veloo:last-plan-app'
-
-export function loadLastPlanNav(): 'tasks' | 'calendar' {
-  return localStorage.getItem(LAST_PLAN_KEY) === 'calendar' ? 'calendar' : 'tasks'
-}
-
-export function saveLastPlanNav(key: 'tasks' | 'calendar') {
-  localStorage.setItem(LAST_PLAN_KEY, key)
-}

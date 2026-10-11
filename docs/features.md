@@ -1,6 +1,6 @@
 # Feature details
 
-The full write-up of the 5 modules, moved out of the README. Each module
+The full write-up of the 4 modules, moved out of the README. Each module
 works on its own, but is designed around the assumption that it sits in one
 workspace sharing the same account and history.
 
@@ -104,26 +104,3 @@ give you no way to check whether you actually understood it.
 **Payoff**
 Turns a diagram from something you "looked at" into something you can
 actually explain, and builds long-term retention through a self-quiz loop.
-
-## Plan (Todo + Calendar)
-
-**Why**
-Reading a paper or learning a new concept doesn't help much if it never
-turns into actual research progress (an experiment, the next paper, meeting
-prep). A separate to-do app forces you to recreate that context from
-scratch when you make a new task.
-
-**What it does**
-- Research task management with sub-steps and priorities.
-- AI-suggested task breakdown and progress strategy.
-- A drag-and-drop weekly time-blocking calendar with a review flow.
-
-**How you use it**
-1. Send anything from Paper or Models that needs follow-up over to Plan.
-2. Flesh out the task using the AI's suggested breakdown into sub-steps.
-3. Drag and drop it onto the weekly calendar to block out time.
-4. Review weekly and carry it into next week's plan.
-
-**Payoff**
-What you read turns naturally into work that gets done, instead of getting
-lost among a pile of open tabs.

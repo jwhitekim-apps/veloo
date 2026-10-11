@@ -16,7 +16,6 @@ veloo 프로젝트 문서 목록. 모든 스펙과 설계 문서는 `docs/` 아�
 - [paper-analyzer](specs/paper-analyzer/spec.md) - 논문 검색·분석
 - [translator](specs/translator/spec.md) - 스트리밍 번역
 - [model-review](specs/model-review/spec.md) - 아키텍처 설명·채점
-- [todo](specs/todo/spec.md) - 할 일·단계·리마인드
 - [contextor](specs/contextor/spec.md) - 용어 맥락별 조회
 - [product](specs/product/spec.md) - 제품 원칙, 페이지 계약, 완료 기준, 변경 절차
 - [mobile-navigation](specs/mobile-navigation/spec.md) - iOS 캡슐 독 / Android 하단 바 동작

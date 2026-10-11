@@ -333,9 +333,8 @@ function QualityBlock({ quality }: { quality: PaperResult['quality'] }) {
       </span>
     )
 
-  // Q1(최상위)→Q4로 갈수록 옅어지는 그레이스케일 등급 배지. Todo/Calendar의
-  // 빨강·주황·초록 우선순위 색과는 다른 축(객관적 저널 등급이라 traffic-light가
-  // 아니라 명도 단계가 더 맞음)이라 priorityAccent를 재사용하지 않고 별도 유지.
+  // Q1(최상위)→Q4로 갈수록 옅어지는 그레이스케일 등급 배지(객관적 저널 등급이라
+  // traffic-light가 아니라 명도 단계가 더 맞음).
   const qKey = String(quality.quartile).trim().toLowerCase()
   const qColors: Record<string, string> = {
     q1: 'var(--text-primary)',

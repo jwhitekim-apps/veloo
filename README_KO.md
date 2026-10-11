@@ -12,9 +12,8 @@
 - [x] **Translator** — ML(Machine Learning)/DL(Deep Learning)/CV(Computer Vision)/NLP(Natural Language Processing) 논문에 최적화된 영-한 스트리밍 번역
 - [x] **Contextor** — 용어의 정의를 하나로 뭉뚱그리지 않고 논문 및 분야별 맥락에 맞게 분리하여 제공
 - [x] **Model Review** — 아키텍처 구조도를 직접 설명해 보고 AI 레퍼런스와 비교하여 채점
-- [x] **Plan (할 일 + 캘린더)** — AI가 제안하는 단계별 작업 분해와 드래그 앤 드롭 지원 주간 캘린더
 
-승인된 계정은 `/:username` 경로에서 클릭 한 번으로 5가지 도구를 전환할 수 있으며, 로그인 상태와 작업 히스토리가 공유됩니다. 모듈별 상세 설명은 [docs/features_ko.md](docs/features_ko.md)를 참고해 주세요.
+승인된 계정은 `/:username` 경로에서 클릭 한 번으로 4가지 도구를 전환할 수 있으며, 로그인 상태와 작업 히스토리가 공유됩니다. 모듈별 상세 설명은 [docs/features_ko.md](docs/features_ko.md)를 참고해 주세요.
 
 ## 시작하기
 

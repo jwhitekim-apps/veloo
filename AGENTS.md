@@ -3,7 +3,7 @@
 ## 프로젝트 개요
 
 개인 연구 허브 (가천대 PRML Lab 소속 연구자가 혼자 쓰는 개인용 도구, 랩 공용 도구 아님).
-FastAPI 루트(server/main.py)가 5개 서브앱을 마운트하는 SPA 구조.
+FastAPI 루트(server/main.py)가 4개 서브앱을 마운트하는 SPA 구조. (할 일 서브앱 `todo`는 2026-10-11에 제거, 할 일은 Microsoft To Do로 옮김)
 배포: veloo.2joon.com (Docker + Cloudflare Tunnel, GitHub Actions 자동 배포)
 
 ## 아키텍처
@@ -14,7 +14,6 @@ FastAPI 루트(server/main.py)가 5개 서브앱을 마운트하는 SPA 구조.
     ├── /paper        → server/app/paper_analyzer/
     ├── /translate    → server/app/translator.py
     ├── /model-review → server/app/reviwer.py
-    ├── /todo         → server/app/todo/
     └── /contextor    → server/app/contextor.py
 ```
 
@@ -43,14 +42,13 @@ FastAPI 루트(server/main.py)가 5개 서브앱을 마운트하는 SPA 구조.
 
 ## 프론트엔드 규칙
 
-- 백엔드 호출은 상대경로 사용 (/paper, /translate, /arch-trainer, /todo)
+- 백엔드 호출은 상대경로 사용 (/paper, /translate, /arch-trainer, /contextor)
 - 별도 baseURL 환경변수 불필요 (동일 origin 서빙)
 - 수정 후 npm run build 실행하여 dist/ 갱신
 - dist/ 직접 수정 금지
 - 화면 문자열 하드코딩 금지, `web/src/shared/i18n/` 사용
 - 디자인 토큰 우선 사용, 새 색상값 직접 작성 금지
 - 공통 UI는 `web/src/shared/components/`에서 정의하고 각 탭에서 재사용
-- 우선순위 표현은 `web/src/features/todos/priority.ts` 사용
 
 ## 공통 코드 규칙
 
@@ -58,10 +56,10 @@ FastAPI 루트(server/main.py)가 5개 서브앱을 마운트하는 SPA 구조.
 - 각 서브앱은 FastAPI() 인스턴스로 독립 선언 후 server/main.py에서 mount
 - Pydantic v2 문법 사용
 - 임시 파일은 /tmp에 저장, 요청 종료 시 삭제
-- AI 호출은 `server/app/ai_provider.py`(Claude/Gemini 프로바이더 추상화, `AI_PROVIDER` env로 선택)를 통해 수행 — `server/app/database.py`처럼 서브앱 전용 폴더가 아닌 `server/app/` 레벨의 공용 모듈. 전 서브앱(paper_analyzer/translator/reviwer/todo/contextor)이 이 프로바이더를 사용
+- AI 호출은 `server/app/ai_provider.py`(Claude/Gemini 프로바이더 추상화, `AI_PROVIDER` env로 선택)를 통해 수행 — `server/app/database.py`처럼 서브앱 전용 폴더가 아닌 `server/app/` 레벨의 공용 모듈. 전 서브앱(paper_analyzer/translator/reviwer/contextor)이 이 프로바이더를 사용
   - `complete(system, user, max_tokens, tier="fast"|"smart", images=[(media_type, bytes), ...])`: 단일턴 완성 응답. `tier`로 CLAUDE_MODEL_FAST/SMART(또는 GEMINI_MODEL_FAST/SMART) 선택, `images`로 멀티모달(이미지) 입력 첨부(reviwer의 `/api/explain`이 사용)
   - `stream(system, user, max_tokens, tier="smart")`: 토큰 단위 스트리밍(async generator). translator의 `/api/translate`가 사용
-  - sync 컨텍스트(todo 라우터, paper_analyzer)는 `complete()` 직접 호출, async 컨텍스트(contextor, reviwer)는 `asyncio.to_thread(provider.complete, ...)`로 감싸 이벤트 루프 블로킹 방지
+  - sync 컨텍스트(paper_analyzer)는 `complete()` 직접 호출, async 컨텍스트(contextor, reviwer)는 `asyncio.to_thread(provider.complete, ...)`로 감싸 이벤트 루프 블로킹 방지
   - GeminiProvider의 스트리밍/이미지 입력 경로는 실제 google-genai SDK로 검증되지 않음 — AI_PROVIDER=gemini로 전환 시 반드시 동작 확인 필요
 
 ## 버전 관리
@@ -101,15 +99,6 @@ ML/DL/CV/NLP 논문 문장·구·용어를 자연스러운 한국어로 번역�
 - 엔드포인트: `POST /api/explain`(이미지 업로드, 최대 10MB → JSON 스키마 설명 생성, Supabase `arch_history` 저장), `POST /api/feedback`(사용자 설명 채점), `GET /api/history`
 - Claude 응답은 JSON만 나오도록 프롬프트로 강제, `_parse_json`이 코드펜스 제거 — 스키마 변경 시 파싱 로직도 확인
 - `CLAUDE_MODEL_SMART`로 모델 오버라이드
-
-### todo (`/todo`)
-
-연구 할 일/단계/우선순위, AI 기반 단계 분해·전략 제안, 주간 리뷰, 마감일 리마인드 이메일.
-
-- 구조: `server/app/todo/api.py`(라우터 include) / `core/routers/{todos,steps,ai,reviews}.py` / `core/scheduler.py`(리마인드 이메일, `SMTP_USER` 설정 시에만 시작) / `core/email_sender.py` / `core/schemas.py` / `core/research_todo.db`(로컬 SQLite, gitignore 대상)
-- 엔드포인트: `/api/todos`(CRUD, `/calendar` 목록, `/{id}/done`, `/{id}/steps`), `/api/steps/{id}`(CRUD, `/done`), `/api/ai/generate-steps`·`/generate-steps-async`·`/generate-strategy`, `/api/reviews/weekly`, `/health`
-- `__init__.py`가 `core/`를 flat import 하도록 `sys.path`에 추가 — `routers.xxx`, `database`, `schemas`로 임포트
-- 마감일은 달력 UI로 지정(텍스트 입력 아님). `web/src/features/calendar/`(타임블로킹 캘린더·주간 리뷰)는 현재 `Shell.tsx`에서 네비게이션이 주석 처리되어 임시 비활성 상태이나 라우팅은 남아 있음
 
 ### contextor (`/contextor`)
 

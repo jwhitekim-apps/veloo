@@ -39,7 +39,7 @@ _login_attempts: dict[str, list[datetime]] = defaultdict(list)
 MAX_ATTEMPTS = 5
 LOCKOUT_MINUTES = 15
 
-_API_PREFIXES = ("/paper/", "/translate/", "/model-review/", "/todo/", "/contextor/")
+_API_PREFIXES = ("/paper/", "/translate/", "/model-review/", "/contextor/")
 _OPEN_PATHS = {
     "/",
     "/login",
@@ -73,7 +73,6 @@ RESERVED_USERNAMES = {
     "register",
     "settings",
     "signup",
-    "todo",
     "translate",
 }
 

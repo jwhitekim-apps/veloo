@@ -22,46 +22,6 @@ create table if not exists sessions (
 create index if not exists sessions_token_idx      on sessions (token);
 create index if not exists sessions_expires_at_idx on sessions (expires_at);
 
--- ── todos ──────────────────────────────────────────────────────────────────
-create table if not exists todos (
-  id          bigserial   primary key,
-  user_id     uuid        not null references users(id) on delete cascade,
-  name        text        not null,
-  memo        text        not null default '',
-  priority    text        not null default 'normal',
-  deadline    text        not null default '',
-  done        boolean     not null default false,
-  ai_strategy text        not null default '',
-  created_at  timestamptz not null default now(),
-  updated_at  timestamptz not null default now()
-);
-
-create index if not exists todos_user_id_idx on todos (user_id);
-
-create or replace function update_updated_at()
-returns trigger as $$
-begin
-  new.updated_at = now();
-  return new;
-end;
-$$ language plpgsql;
-
-drop trigger if exists todos_updated_at on todos;
-create trigger todos_updated_at
-  before update on todos
-  for each row execute function update_updated_at();
-
--- ── steps ──────────────────────────────────────────────────────────────────
-create table if not exists steps (
-  id          bigserial primary key,
-  todo_id     bigint    not null references todos(id) on delete cascade,
-  text        text      not null,
-  done        boolean   not null default false,
-  order_index integer   not null default 0
-);
-
-create index if not exists steps_todo_id_idx on steps (todo_id);
-
 -- ── paper_history ──────────────────────────────────────────────────────────
 create table if not exists paper_history (
   id         bigserial   primary key,
@@ -116,34 +76,6 @@ alter table contextor_history
 create index if not exists contextor_history_user_id_idx on contextor_history (user_id);
 create index if not exists contextor_history_query_idx on contextor_history (query);
 
--- ── 캘린더·알림·주간 리뷰 마이그레이션 ────────────────────────────────────────
-alter table todos
-  add column if not exists start_time   timestamptz,
-  add column if not exists end_time     timestamptz,
-  add column if not exists remind_at    timestamptz,
-  add column if not exists reminded     boolean not null default false,
-  add column if not exists completed_at timestamptz;
-
+-- ── users 추가 열 ───────────────────────────────────────────────────────────
 alter table users
   add column if not exists email text;
-
-create index if not exists todos_start_time_idx on todos (start_time);
-create index if not exists todos_remind_at_idx  on todos (remind_at) where reminded = false;
-
--- completed_at 자동 기록 트리거
-create or replace function set_completed_at()
-returns trigger as $$
-begin
-  if new.done = true and (old.done is distinct from true) then
-    new.completed_at := now();
-  elsif new.done = false then
-    new.completed_at := null;
-  end if;
-  return new;
-end;
-$$ language plpgsql;
-
-drop trigger if exists trg_set_completed_at on todos;
-create trigger trg_set_completed_at
-  before update on todos
-  for each row execute function set_completed_at();

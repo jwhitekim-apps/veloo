@@ -2,7 +2,7 @@
 AI Provider abstraction layer.
 
 Shared across all backend subapps (paper_analyzer, translator, reviwer,
-todo, contextor). Lets callers switch between Claude and Gemini (or add
+contextor). Lets callers switch between Claude and Gemini (or add
 more providers later) without touching call-site logic. Provider is
 selected via the AI_PROVIDER env var ("claude" | "gemini"), defaulting to
 "claude".
@@ -200,7 +200,7 @@ def get_ai_provider() -> AIProvider:
 
 
 # ── JSON 응답 프롬프트/파싱 공용 헬퍼 ──────────────────────────────
-# JSON을 응답으로 요구하는 서브앱(todo, paper_analyzer 등)이 프롬프트 문구와
+# JSON을 응답으로 요구하는 서브앱(paper_analyzer 등)이 프롬프트 문구와
 # 파싱 로직을 각자 새로 베껴 쓰지 않도록 여기 하나로 모은다.
 
 JSON_OUTPUT_CONTRACT = """\

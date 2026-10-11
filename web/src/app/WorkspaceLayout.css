@@ -292,9 +292,6 @@
   overflow: auto;
   scrollbar-gutter: stable;
 }
-.shell-plan-switcher {
-  display: none;
-}
 
 @media (max-width: 980px) {
   .workspace-sidebar {
@@ -584,50 +581,8 @@
     white-space: nowrap;
   }
 
-  .shell-plan-switcher {
-    min-height: 40px;
-    flex: 0 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px;
-    padding: 5px 12px;
-    border-bottom: 1px solid var(--border-subtle);
-    background: color-mix(in srgb, var(--bg-base) 94%, var(--accent-soft));
-  }
 
-  .shell-plan-switcher button {
-    min-width: 0;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 0 10px;
-    border: 0;
-    border-radius: 9px;
-    background: transparent;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font: inherit;
-    font-size: 11px;
-    font-weight: 650;
-  }
 
-  /* 2026-09-11: --accent(그린) 대신 --text-primary(검정) — "모두 초록이 아니라 검정"
-     피드백. 하단 탭바(.shell-mobile-tab/.shell-android-tab)와 같은 방침으로 통일. */
-  .shell-plan-switcher button.is-active {
-    background: var(--bg-base);
-    color: var(--text-primary);
-    box-shadow: 0 1px 4px rgba(24, 25, 48, 0.08);
-  }
-  .shell-plan-switcher button:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: -2px;
-  }
-  .shell-plan-switcher svg {
-    width: 14px;
-    height: 14px;
-  }
 
   .shell-mobile-tab:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.72);
