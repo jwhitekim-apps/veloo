@@ -1,80 +1,56 @@
 # Veloo
 
-**Languages:** English | [한국어](README_KO.md)
+Veloo is a personal workspace for reading research papers. Paper analysis, English-to-Korean translation, terminology lookup, and architecture-explanation practice live under one login.
 
-**Live demo:** <https://veloo.2joon.com/> — private beta; sign-up requests are
-approved manually, so access isn't instant. It's a personal deployment run on
-the maintainer's own API keys and Supabase project — not a shared lab tool.
+[Open Veloo](https://veloo.2joon.com/) — private beta; accounts are approved manually.
 
-Doing research usually means bouncing between a PDF reader, a translator, a
-notes app, a to-do list, and a calendar — each one forgetting what you were
-doing in the last one. Veloo puts the parts that actually matter for reading
-and producing research into one workspace, under one login, sharing one
-history.
+![Illustration of research papers and charts connected in a workspace](web/public/marketing/hero-research.png)
 
 ## Features
 
-- [x] **Paper Analyzer** — upload/search a paper, get an AI summary and a
-      journal quality score before you invest time reading it
-- [x] **Translator** — streaming EN → KO translation tuned for ML/DL/CV/NLP
-      writing
-- [x] **Contextor** — a term's meaning broken out by which paper/subfield
-      you're reading, not one flattened definition
-- [x] **Model Review** — upload an architecture diagram, explain it
-      yourself, get it graded against an AI reference explanation
+- **Paper Analyzer** — upload a PDF or search by title or supported URL for an AI summary, Semantic Scholar metadata, and SJR journal indicators when the venue matches
+- **Translator** — streamed English-to-Korean translation, instructed to preserve formulas, proper nouns, and selected ML/DL terms
+- **Contextor** — meanings of a word or phrase grouped by ML/DL context
+- **Model Review** — explain an architecture diagram and get AI grading against a reference explanation
 
-Every approved account gets all four one click apart at `/:username`,
-sharing one login and one history — see [docs/features.md](docs/features.md)
-for the full write-up of each module.
+Each tool keeps its own history per account. Walkthroughs are in [docs/features.md](docs/features.md).
 
-## Getting started
+## Self-hosting
 
-**Prerequisites:** Python 3.11, Node.js, and API keys for
-[Anthropic Claude](https://console.anthropic.com/) (or
-[Gemini](https://ai.google.dev/) as an alternate provider) and
-[Supabase](https://supabase.com/) (auth + per-tool history).
+You need Docker, a Supabase project, and an Anthropic API key (or Gemini with `AI_PROVIDER=gemini`).
+
+1. Copy [`.env.example`](.env.example) to `.env` and set `SUPABASE_URL`, `SUPABASE_KEY`, and `ANTHROPIC_API_KEY` (for Gemini: `AI_PROVIDER=gemini` and `GEMINI_API_KEY`). `SUPABASE_SERVICE_KEY` and `S2_API_KEY` are optional.
+2. Run [`server/schema.sql`](server/schema.sql) in the Supabase SQL Editor.
+3. Build and run:
+
+   ```bash
+   docker build -t veloo .
+   docker run --env-file .env -p 9000:9000 veloo
+   ```
+
+4. Open <http://localhost:9000/> and register, then set your account's `is_approved` to `true` in the `users` table.
+
+The SMTP entries in `.env.example` belong to a removed module. Gemini streaming and image input are not fully verified yet ([design notes](docs/design.md)).
+
+## Local development
+
+You also need Python and Node.js (the Dockerfile uses 3.11 and 20). After steps 1–2 above, build the frontend first — the backend serves `web/dist`.
 
 ```bash
-# create .env with ANTHROPIC_API_KEY, SUPABASE_URL, SUPABASE_KEY, ... (see CLAUDE.md)
-
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python -m server.main          # http://localhost:9000
-
-cd web && npm install && npm run dev    # http://localhost:5173
-```
-
-Production build check:
-
-```bash
-cd web && npm run build && cd ..
+(cd web && npm ci && npm run build)
 python -m server.main
 ```
 
-```bash
-# Docker
-docker build -t veloo .
-docker run --env-file .env -p 9000:9000 veloo
-```
+For frontend work, run `npm run dev` in `web/` and open <http://localhost:5173/>. Vite proxies to port 9000.
 
-Supabase schema lives in `server/schema.sql` — run it once in the Supabase
-SQL Editor. Full environment variable list is in `CLAUDE.md`.
+## Documentation
 
-## Tech stack
-
-- **Backend** — FastAPI, Python 3.11, Uvicorn
-- **Frontend** — React 18, TypeScript, Vite
-- **AI** — Anthropic Claude, with Gemini as a swappable provider
-- **DB** — Supabase (auth + per-tool history)
-- **Deploy** — Docker, Cloudflare Tunnel, GitHub Actions
-
-## Docs
-
-- [Feature details](docs/features.md)
-- [Specs (API, product, mobile nav)](docs/specs/)
+- [Feature walkthroughs](docs/features.md) · [Docs index](docs/README.md)
+- [API and product specs](docs/specs/) · [UI design system](docs/ui-design-system.md)
 - [Changelog](CHANGELOG.md)
-- [UI design system](docs/ui-design-system.md)
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © 2026 jwhitekim

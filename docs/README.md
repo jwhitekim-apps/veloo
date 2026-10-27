@@ -31,4 +31,4 @@ veloo 프로젝트 문서 목록. 모든 스펙과 설계 문서는 `docs/` 아�
 - [캡슐 내비게이션 디자인 조사](capsule-navigation-research.md) - 탭 인디케이터 디자인 참고 자료
 - [배포 점검 보고서](reports/deploy-monitor-report-2026-08-24.md) - 2026-08-24 배포 점검 기록
 
-루트 문서: [README](../README.md) / [한국어 README](../README_KO.md) / [Changelog](../CHANGELOG.md)
+루트 문서: [README](../README.md) / [Changelog](../CHANGELOG.md)
