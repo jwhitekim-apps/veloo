@@ -10,7 +10,6 @@ capability별 요구사항은 `specs/<capability>/spec.md`에 있다. 여기는 
     ├── /paper        → server/app/paper_analyzer/
     ├── /translate    → server/app/translator.py
     ├── /model-review → server/app/reviwer.py
-    ├── /todo         → server/app/todo/
     └── /contextor    → server/app/contextor.py
 ```
 
@@ -22,7 +21,7 @@ capability별 요구사항은 `specs/<capability>/spec.md`에 있다. 여기는 
 
 - `complete(system, user, max_tokens, tier="fast"|"smart", images=[...])` — 단일턴 완성 응답. `images`로 멀티모달 입력(model-review의 `/api/explain`이 사용).
 - `stream(system, user, max_tokens, tier="smart")` — 토큰 단위 스트리밍(async generator, translator의 `/api/translate`가 사용).
-- sync 컨텍스트(todo, paper-analyzer)는 `complete()` 직접 호출, async 컨텍스트(contextor, model-review)는 `asyncio.to_thread(provider.complete, ...)`로 감싸 이벤트 루프 블로킹을 방지한다.
+- sync 컨텍스트(paper-analyzer)는 `complete()` 직접 호출, async 컨텍스트(contextor, model-review)는 `asyncio.to_thread(provider.complete, ...)`로 감싸 이벤트 루프 블로킹을 방지한다.
 - GeminiProvider의 스트리밍/이미지 입력 경로는 실제 SDK로 검증되지 않음 — `AI_PROVIDER=gemini` 전환 시 동작 확인 필요.
 
 ## 데이터베이스
@@ -31,11 +30,10 @@ capability별 요구사항은 `specs/<capability>/spec.md`에 있다. 여기는 
 
 ## 프론트엔드 규칙
 
-- 백엔드 호출은 상대경로 사용(`/paper`, `/translate`, `/model-review`, `/todo`, `/contextor`) — 별도 baseURL 환경변수 불필요(동일 origin 서빙).
+- 백엔드 호출은 상대경로 사용(`/paper`, `/translate`, `/model-review`, `/contextor`) — 별도 baseURL 환경변수 불필요(동일 origin 서빙).
 - 화면 문자열은 `web/src/shared/i18n/`에서 관리(하드코딩 금지, en/ko/zh 동시 추가) — `contract.md` 4절 참고.
 - 디자인 토큰은 `web/src/shared/styles/index.css`에 정의, 세부 값·타이포·컴포넌트 표면 근거는 `ui-design-system.md` 참고, 화면 구조 원칙은 `contract.md` 참고.
 - 공유 UI(`PageHeader`, `PageGuide`, `PageEmptyIntro`, `StatePanel`, `WorkspaceControls` 등)는 `web/src/shared/components/`에서 정의하고 각 탭에서 재사용 — `contract.md` D-004.
-- 우선순위 표현은 `web/src/features/todos/priority.ts`만 사용 — 다른 곳에서 재구현하지 않는다.
 
 ## 모바일 OS별 네비게이션 분기
 

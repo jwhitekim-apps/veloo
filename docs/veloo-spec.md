@@ -111,7 +111,6 @@ Veloo는 승인된 계정마다 `/:username` 개인 워크스페이스를 제공
 ## 9. 관련 문서
 
 - [기능 상세](features_ko.md)
-- [API 명세서](API.md)
 - [Changelog](../CHANGELOG.md)
 - [UI 디자인 시스템](ui-design-system.md)
 - [iOS 캡슐 내비게이션](ios-capsule-navigation.md)

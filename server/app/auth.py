@@ -13,6 +13,8 @@ from pydantic import BaseModel
 from starlette.middleware.base import BaseHTTPMiddleware
 from supabase import create_client, Client
 
+from server.app.database import get_supabase_key
+
 _supabase: Client | None = None
 
 
@@ -20,9 +22,9 @@ def get_supabase() -> Client:
     global _supabase
     if _supabase is None:
         url = os.getenv("SUPABASE_URL")
-        key = os.getenv("SUPABASE_KEY")
+        key = get_supabase_key()
         if not url or not key:
-            raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set")
+            raise RuntimeError("SUPABASE_URL and SUPABASE_SERVICE_KEY or SUPABASE_KEY must be set")
         _supabase = create_client(url, key)
     return _supabase
 
